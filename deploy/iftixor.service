@@ -1,0 +1,15 @@
+[Unit]
+Description=Iftixor Telegram AI bot
+After=network.target
+
+[Service]
+Type=simple
+User=iftixor
+WorkingDirectory=/opt/iftixor
+EnvironmentFile=/opt/iftixor/.env
+ExecStart=/opt/iftixor/.venv/bin/python main.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

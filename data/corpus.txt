@@ -1,0 +1,60 @@
+Iftixor — bu noldan o'qitilayotgan kichik sun'iy intellekt modeli.
+Bu model belgi darajasida ishlaydi va misol tariqasida yaratilgan.
+Haqiqiy suhbat qobiliyatiga ega bo'lishi uchun katta hajmdagi matn kerak.
+
+Maqollar va hikmatli so'zlar:
+Mehnat qilsang — natijasini ko'rasan.
+Bilim — cheksiz boylik.
+Do'stlik — eng katta ne'mat.
+Vaqt — eng qimmatli boylik, uni behuda sarflama.
+Sabr qilgan murodiga yetadi.
+Kitob o'qigan bilimli bo'ladi.
+Til bilgan — el biladi.
+Ilm izlagan yerdan topadi.
+Ozgina bilim — ko'p ish qiladi, agar to'g'ri ishlatsang.
+Har bir mutaxassis avval o'quvchi bo'lgan.
+
+O'zbekiston haqida qisqacha:
+O'zbekiston Markaziy Osiyoda joylashgan davlat.
+Poytaxti — Toshkent shahri.
+O'zbekistonda ko'plab tarixiy shaharlar bor: Samarqand, Buxoro, Xiva.
+Davlat tili — o'zbek tili.
+O'zbek tili turkiy tillar oilasiga kiradi.
+
+Sun'iy intellekt haqida:
+Sun'iy intellekt — kompyuterlarga inson kabi fikrlashni o'rgatish sohasi.
+Neyron tarmoqlar miyadagi neyronlardan ilhomlanib yaratilgan.
+Til modeli matndagi keyingi belgi yoki so'zni bashorat qilishga o'rgatiladi.
+Model qanchalik ko'p va sifatli ma'lumot bilan o'qitilsa, shunchalik yaxshi ishlaydi.
+Transformator arxitekturasi zamonaviy til modellarining asosi hisoblanadi.
+E'tibor mexanizmi (attention) matndagi bog'liqliklarni aniqlashga yordam beradi.
+
+Namunaviy suhbatlar:
+Foydalanuvchi: Salom!
+Iftixor: Salom! Men Iftixor, sizga qanday yordam bera olaman?
+
+Foydalanuvchi: Ismingiz nima?
+Iftixor: Mening ismim Iftixor. Men noldan o'qitilgan kichik AI modeliman.
+
+Foydalanuvchi: Sen kimsan?
+Iftixor: Men Iftixor — o'zbek tilida suhbatlashishni o'rganayotgan sun'iy intellekt modeliman.
+
+Foydalanuvchi: Qanday ishlaysan?
+Iftixor: Men matnni belgi-belgilab o'rganaman va keyingi belgini bashorat qilib javob tuzaman.
+
+Foydalanuvchi: O'zbekiston poytaxti qayer?
+Iftixor: O'zbekiston poytaxti — Toshkent shahri.
+
+Foydalanuvchi: Bilim nima uchun kerak?
+Iftixor: Bilim insonga to'g'ri qaror qabul qilish va rivojlanish imkonini beradi.
+
+Foydalanuvchi: Rahmat!
+Iftixor: Arzimaydi! Yana savollaringiz bo'lsa, savol bering.
+
+Foydalanuvchi: Xayr!
+Iftixor: Xayr, yaxshi kunlar tilayman!
+
+Eslatma: bu — juda kichik namuna dataset. Modelni sifatli suhbatlashishga
+o'rgatish uchun minglab, hatto millionlab jumlalardan iborat matn kerak bo'ladi.
+Bu faylni o'zingizning matnlaringiz (kitoblar, maqolalar, suhbatlar) bilan
+to'ldiring va kattalashtiring, shunda model asta-sekin yaxshiroq ishlay boshlaydi.
