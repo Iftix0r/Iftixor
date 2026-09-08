@@ -38,14 +38,12 @@ main.py         — Telegram botni ishga tushiruvchi asosiy fayl
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
-```
 
-CPU uchun torch'ning yengilroq versiyasini o'rnatmoqchi bo'lsangiz, avval
-shuni ishga tushiring, keyin qolgan kutubxonalarni o'rnating:
-
-```bash
+# MUHIM: torch'ni avval CPU-only versiyasi bilan o'rnating.
+# Oddiy "pip install torch" PyPI'dan CUDA to'plamini (bir necha GB) ham
+# tortib oladi va kichik VPS'larda diskni to'ldirib qo'yadi.
 pip install torch --index-url https://download.pytorch.org/whl/cpu
+
 pip install -r requirements.txt
 ```
 

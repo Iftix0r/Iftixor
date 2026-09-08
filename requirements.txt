@@ -1,3 +1,8 @@
-torch
+# torch shu yerda YO'Q — uni CUDA to'plamisiz (CPU-only) alohida o'rnatish kerak,
+# aks holda pip PyPI'dan GB'larcha CUDA kutubxonalarini ham tortib oladi.
+# Avval quyidagini ishga tushiring:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+# Keyin shu faylni o'rnating:
+#   pip install -r requirements.txt
 python-telegram-bot==21.6
 python-dotenv==1.0.1
