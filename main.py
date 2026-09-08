@@ -1,9 +1,19 @@
+import asyncio
 import os
 import sys
 
 from dotenv import load_dotenv
 
 from iftixor.bot import build_application
+
+# Python 3.12+ da asyncio.get_event_loop() joriy loop bo'lmasa endi xato
+# qaytaradi (avval avtomatik yaratardi). python-telegram-bot 21.x hali ham
+# shu funksiyaga tayanadi, shuning uchun run_polling() dan oldin loop'ni
+# qo'lda o'rnatib qo'yamiz.
+try:
+    asyncio.get_event_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
 
 def main():
