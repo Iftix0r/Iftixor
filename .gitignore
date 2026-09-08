@@ -8,3 +8,4 @@ checkpoints/*.pt.tmp
 !checkpoints/.gitkeep
 *.log
 nohup.out
+data/conversations.txt

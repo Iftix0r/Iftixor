@@ -31,7 +31,8 @@ def save_checkpoint(out_path: Path, model: GPT, optimizer: torch.optim.Optimizer
 
 def main():
     parser = argparse.ArgumentParser(description="Iftixor til modelini noldan o'qitish (CPU uchun mo'ljallangan)")
-    parser.add_argument("--data", default="data/corpus.txt")
+    parser.add_argument("--data", nargs="+", default=["data/corpus.txt"],
+                         help="Bitta yoki bir nechta matn fayli (barchasi birlashtirilib o'qitiladi)")
     parser.add_argument("--out", default="checkpoints/iftixor.pt")
     parser.add_argument("--steps", type=int, default=3000)
     parser.add_argument("--batch-size", type=int, default=32)
@@ -51,7 +52,14 @@ def main():
     device = "cpu"
     out_path = Path(args.out)
 
-    text = Path(args.data).read_text(encoding="utf-8")
+    texts = []
+    for data_path in args.data:
+        p = Path(data_path)
+        if p.exists():
+            texts.append(p.read_text(encoding="utf-8"))
+        else:
+            print(f"Ogohlantirish: {p} topilmadi, o'tkazib yuborildi.")
+    text = "\n".join(texts)
 
     start_step = 0
     if args.resume and out_path.exists():

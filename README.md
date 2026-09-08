@@ -119,6 +119,24 @@ python -m iftixor.chat_cli --checkpoint checkpoints/iftixor.pt
 5. Telegram'da botingizga `/start` yozing va suhbatni boshlang.
    `/reset` — suhbat tarixini tozalaydi.
 
+### Botning o'z-o'zidan (nazorat ostida) rivojlanishi
+
+Bot har bir suhbatni `data/conversations.txt` fayliga avtomatik yozib boradi
+(bu fayl `.gitignore`da, GitHub'ga tushmaydi — shaxsiy ma'lumot).
+
+Faqat `ADMIN_CHAT_ID`da ko'rsatilgan chatdan quyidagi buyruqlar ishlaydi:
+
+- `/retrain [qadamlar_soni]` — asosiy korpus + shu paytgacha yig'ilgan
+  suhbatlar asosida modelni orqa fonda qayta o'qitadi (bot bloklanmaydi,
+  javob berishda davom etadi). Progress avvalgidek shu chatga keladi.
+  Standart qadamlar soni: 1500. Misol: `/retrain 2000`
+- `/reload` — qayta o'qitish tugagach, botni butunlay qayta ishga
+  tushirmasdan, yangi checkpointni xotiraga qayta yuklaydi.
+
+Bu — to'liq avtonom, nazoratsiz o'z-o'zini o'zgartirish emas: har safar
+sizga xabar keladi, va `/retrain`/`/reload`ni faqat siz (admin) chaqira
+olasiz.
+
 ### O'qitish progressini Telegram orqali kuzatish (ixtiyoriy)
 
 `python -m iftixor.train` ishga tushirilganda, agar `.env` faylida
