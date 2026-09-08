@@ -4,4 +4,7 @@ __pycache__/
 venv/
 .env
 checkpoints/*.pt
+checkpoints/*.pt.tmp
 !checkpoints/.gitkeep
+*.log
+nohup.out

@@ -73,6 +73,16 @@ Foydali parametrlar:
 - `--n-layer`, `--n-head`, `--n-embd` — model hajmi (kattalashtirsangiz CPU'da sekinlashadi)
 
 O'qitish tugagach, model `checkpoints/iftixor.pt` fayliga saqlanadi.
+Checkpoint har `--eval-interval` qadamda ham saqlanib boriladi (nafaqat
+oxirida) — shuning uchun server o'chib qolsa yoki jarayon uzilib qolsa,
+hech narsa yo'qolmaydi.
+
+Agar o'qitish biror sababdan (masalan, xotira yetishmasligi) uzilib qolsa,
+uni oxirgi saqlangan joydan davom ettirish mumkin:
+
+```bash
+python -m iftixor.train --out checkpoints/iftixor.pt --steps 3000 --resume
+```
 
 ## 4. Terminalda tez sinash
 
