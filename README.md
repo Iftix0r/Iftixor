@@ -60,6 +60,37 @@ Foydalanuvchi: <savol>
 Iftixor: <javob>
 ```
 
+### OpenAI yordamida sun'iy (synthetic) ma'lumot ko'paytirish (ixtiyoriy)
+
+Qo'lda yozilgan namunalar odatda juda kam bo'ladi. Agar OpenAI API
+kalitingiz bo'lsa, kuchliroq model yordamida ko'plab o'zbek tilidagi
+namunaviy suhbatlarni avtomatik generatsiya qilib, Iftixor uchun
+o'quv ma'lumotini kattalashtirish mumkin — bu "o'qituvchi model orqali
+ma'lumot ko'paytirish" deb ataladi.
+
+1. `.env` fayliga kalitingizni qo'shing (hech qachon chatga yoki
+   GitHub'ga yubormang):
+
+   ```
+   OPENAI_API_KEY=sk-...
+   ```
+
+2. Ishga tushiring:
+
+   ```bash
+   python -m iftixor.gen_synthetic_data --count 500
+   ```
+
+   Bu `data/synthetic.txt` fayliga 500 ta namunaviy suhbat yozadi
+   (API xarajati kichik modelda — `gpt-4o-mini` — juda arzon, lekin
+   baribir OpenAI hisobingizdan pul yechiladi, ehtiyot bo'ling).
+
+3. O'qitishda shu faylni ham qo'shing:
+
+   ```bash
+   python -m iftixor.train --data data/corpus.txt data/synthetic.txt --steps 3000
+   ```
+
 ## 3. Modelni noldan o'qitish
 
 ```bash
