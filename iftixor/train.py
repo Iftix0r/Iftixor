@@ -7,6 +7,7 @@ import torch
 from .config import GPTConfig
 from .dataset import get_batch
 from .model import GPT
+from .notify import notify_admin
 from .tokenizer import CharTokenizer
 
 
@@ -49,6 +50,10 @@ def main():
 
     n_params = sum(p.numel() for p in model.parameters())
     print(f"Vocab hajmi: {tokenizer.vocab_size} | Parametrlar soni: {n_params:,} | Qurilma: {device}")
+    notify_admin(
+        f"Iftixor o'qitish boshlandi.\n"
+        f"Qadamlar: {args.steps} | Parametrlar: {n_params:,}"
+    )
 
     start = time.time()
     for step in range(1, args.steps + 1):
@@ -65,7 +70,14 @@ def main():
                 _, val_loss = model(xv, yv)
             model.train()
             elapsed = time.time() - start
+            percent = 100 * step / args.steps
+            eta_min = (elapsed / step) * (args.steps - step) / 60
             print(f"step {step}/{args.steps} | train loss {loss.item():.4f} | val loss {val_loss.item():.4f} | {elapsed:.1f}s")
+            notify_admin(
+                f"Iftixor o'qitilmoqda: {step}/{args.steps} ({percent:.1f}%)\n"
+                f"Train loss: {loss.item():.4f} | Val loss: {val_loss.item():.4f}\n"
+                f"O'tgan vaqt: {elapsed / 60:.1f} daq | Taxminiy qolgan: {eta_min:.1f} daq"
+            )
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -79,6 +91,7 @@ def main():
         out_path,
     )
     print(f"Model saqlandi: {out_path}")
+    notify_admin(f"Iftixor o'qitildi va saqlandi: {out_path}\nJami vaqt: {(time.time() - start) / 60:.1f} daqiqa")
 
 
 if __name__ == "__main__":

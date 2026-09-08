@@ -109,6 +109,19 @@ python -m iftixor.chat_cli --checkpoint checkpoints/iftixor.pt
 5. Telegram'da botingizga `/start` yozing va suhbatni boshlang.
    `/reset` — suhbat tarixini tozalaydi.
 
+### O'qitish progressini Telegram orqali kuzatish (ixtiyoriy)
+
+`python -m iftixor.train` ishga tushirilganda, agar `.env` faylida
+`TELEGRAM_BOT_TOKEN` va `ADMIN_CHAT_ID` ikkalasi ham to'ldirilgan bo'lsa,
+har `--eval-interval` qadamda (standart: 200) sizga qancha qadam bajarilgani,
+train/val loss va taxminiy qolgan vaqt haqida Telegram xabari keladi.
+
+`ADMIN_CHAT_ID` olish uchun: botingizga istalgan xabar yuboring, so'ng
+brauzerda `https://api.telegram.org/bot<TOKEN>/getUpdates` manzilini oching
+va javobdan `"chat":{"id": ...}` qiymatini `.env`ga yozing. Bu bot hali
+o'qitilmagan (checkpoint yo'q) bo'lsa ham ishlaydi — chat_id olish uchun
+botning o'zi ishlab turishi shart emas.
+
 ## 6. GitHub'ga yuklash
 
 ```bash
