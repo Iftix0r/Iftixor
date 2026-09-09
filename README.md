@@ -115,6 +115,19 @@ uni oxirgi saqlangan joydan davom ettirish mumkin:
 python -m iftixor.train --out checkpoints/iftixor.pt --steps 3000 --resume
 ```
 
+### Overfitting haqida — muhim
+
+Kichik dataset bilan ko'p qadam o'qitsangiz, model ma'lumotni **tushunish**
+o'rniga **yodlab olishi** mumkin (overfitting) — bunda `train loss` deyarli
+0'ga tushadi, lekin `val loss` esa pasayish o'rniga oshib boradi. Bu —
+modelning yangi (ko'rmagan) matnga yomon javob berishini bildiradi.
+
+Shuning uchun `--out checkpoints/iftixor.pt` bilan bir qatorda, `val loss`
+eng past bo'lgan qadamdagi versiya alohida `checkpoints/iftixor_best.pt`
+fayliga ham saqlanadi. **Botni ishga tushirishda odatda shu `_best` faylni
+ishlating** (`.env`dagi `MODEL_CHECKPOINT_PATH`), oxirgi qadamdagini emas —
+ayniqsa dataset hali kichik bo'lsa.
+
 ## 4. Terminalda tez sinash
 
 Telegram'ga ulashdan oldin, model qanday javob berayotganini terminalda

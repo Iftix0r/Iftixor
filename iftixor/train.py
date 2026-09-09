@@ -11,6 +11,19 @@ from .notify import notify_admin
 from .tokenizer import CharTokenizer
 
 
+@torch.no_grad()
+def estimate_val_loss(model: GPT, val_data: torch.Tensor, block_size: int, batch_size: int,
+                       device: str, eval_iters: int = 5) -> float:
+    model.eval()
+    losses = torch.zeros(eval_iters)
+    for i in range(eval_iters):
+        xv, yv = get_batch(val_data, block_size, batch_size, device)
+        _, loss = model(xv, yv)
+        losses[i] = loss.item()
+    model.train()
+    return losses.mean().item()
+
+
 def save_checkpoint(out_path: Path, model: GPT, optimizer: torch.optim.Optimizer, config: GPTConfig,
                      tokenizer: CharTokenizer, step: int) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -102,6 +115,9 @@ def main():
             f"Qadamlar: {args.steps} | Parametrlar: {n_params:,}"
         )
 
+    best_val_loss = float("inf")
+    best_path = out_path.with_name(out_path.stem + "_best" + out_path.suffix)
+
     start = time.time()
     for step in range(start_step + 1, args.steps + 1):
         xb, yb = get_batch(train_data, args.block_size, args.batch_size, device)
@@ -111,24 +127,33 @@ def main():
         optimizer.step()
 
         if step % args.eval_interval == 0 or step == args.steps:
-            model.eval()
-            with torch.no_grad():
-                xv, yv = get_batch(val_data, args.block_size, args.batch_size, device)
-                _, val_loss = model(xv, yv)
-            model.train()
+            val_loss = estimate_val_loss(model, val_data, args.block_size, args.batch_size, device)
             elapsed = time.time() - start
             percent = 100 * step / args.steps
             eta_min = (elapsed / (step - start_step)) * (args.steps - step) / 60
-            print(f"step {step}/{args.steps} | train loss {loss.item():.4f} | val loss {val_loss.item():.4f} | {elapsed:.1f}s")
+            is_best = val_loss < best_val_loss
+            print(
+                f"step {step}/{args.steps} | train loss {loss.item():.4f} | val loss {val_loss:.4f}"
+                f"{' (eng yaxshisi)' if is_best else ''} | {elapsed:.1f}s"
+            )
             notify_admin(
                 f"Iftixor o'qitilmoqda: {step}/{args.steps} ({percent:.1f}%)\n"
-                f"Train loss: {loss.item():.4f} | Val loss: {val_loss.item():.4f}\n"
+                f"Train loss: {loss.item():.4f} | Val loss: {val_loss:.4f}"
+                f"{' (eng yaxshisi)' if is_best else ''}\n"
                 f"O'tgan vaqt: {elapsed / 60:.1f} daq | Taxminiy qolgan: {eta_min:.1f} daq"
             )
             save_checkpoint(out_path, model, optimizer, config, tokenizer, step)
+            if is_best:
+                best_val_loss = val_loss
+                save_checkpoint(best_path, model, optimizer, config, tokenizer, step)
 
     print(f"Model saqlandi: {out_path}")
-    notify_admin(f"Iftixor o'qitildi va saqlandi: {out_path}\nJami vaqt: {(time.time() - start) / 60:.1f} daqiqa")
+    print(f"Eng yaxshi natijali versiya: {best_path} (val loss {best_val_loss:.4f})")
+    notify_admin(
+        f"Iftixor o'qitildi va saqlandi: {out_path}\n"
+        f"Eng yaxshi versiya: {best_path} (val loss {best_val_loss:.4f})\n"
+        f"Jami vaqt: {(time.time() - start) / 60:.1f} daqiqa"
+    )
 
 
 if __name__ == "__main__":
