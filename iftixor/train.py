@@ -46,10 +46,15 @@ def main():
     parser.add_argument("--seed", type=int, default=1337)
     parser.add_argument("--resume", action="store_true",
                          help="--out'dagi mavjud checkpointdan davom ettirish (masalan, jarayon uzilib qolgandan keyin)")
+    parser.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"],
+                         help="'auto' bo'lsa GPU mavjud bo'lganda (masalan Google Colab) avtomatik ishlatadi")
     args = parser.parse_args()
 
     torch.manual_seed(args.seed)
-    device = "cpu"
+    if args.device == "auto":
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+    else:
+        device = args.device
     out_path = Path(args.out)
 
     texts = []
